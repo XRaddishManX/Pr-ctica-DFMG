@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-<title> DIEGO PAPSOTE MARTINEZ GARCIA </title>
+<title> DIEGO MARTINEZ MARTINEZ GARCIA </title>
 <meta name = "viewport" content="width=device-width, initial-scale=1" />
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -12,7 +12,6 @@
 </head>
 
 <body>
-<h1> Hola nena </h1>
 <div class= "container-fluid">
     <div class= "contenedor">
         <div class= "row align-items-center h-100">
@@ -21,7 +20,6 @@
                 <div class= "align-items-center">
                     <p> Diego Fernando Martínez García </p>
                     <form name= "frm_login" id= "frm_login" action="core/process.php"></form>
-                    <img src="https://i.ytimg.com/vi/Ezqc0_Ym0NY/maxresdefault.jpg" height="400px" width="700px">
                     <table>
                         <thead>
                             <tr>
@@ -50,7 +48,7 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <button type="button" class=" btn btn-primary" name="btn_entrar" id="bnt_entrar"></button>
+                                    <button type="button" class=" btn btn-primary" name="btn_entrar" id="bnt_entrar">Iniciar Sesión</button>
                                     <div class="mensaje"></div>
 
                                 </td>
@@ -63,6 +61,34 @@
     </div>
 
 </div>
+<script>
+			function enviar_datos(u,p){
+				$.post($("#frm_login").attr("action"),{
+						txt_usuario: u,
+						txt_password: p
+					}).done(function(datos){
+						//console.log(datos.data.url);
+						window.location.replace(datos.data.url+"?token="+datos.data.token)
+					}).fail(function(xhr, status, error){
+						$(".mensaje").html(xhr.responseJSON.mensaje);
+					});
+			}
+			$(document).ready(function(){
+				$("#btn_entrar").click(function(){
+					enviar_datos($("#txt_usuario").val(),$("#txt_password").val());
+				});
+				$("#txt_usuario").keypress(function(event){
+					if(event.which == 13){
+						enviar_datos($("#txt_usuario").val(),$("#txt_password").val());
+					}
+				});
+				$("#txt_password").keypress(function(event){
+					if(event.which == 13){
+						enviar_datos($("#txt_usuario").val(),$("#txt_password").val());
+					}
+				});
+			});
+		</script>
 </body>
 
 </html>
